@@ -1,0 +1,65 @@
+:root {
+  --app-primary: #5b5bd6;
+  --app-success: #f59e0b;
+  --app-warning: #f59e0b;
+  --app-danger: #ef4444;
+  --app-info: #3b82f6;
+  --app-background: #ffffff;
+  --app-surface: #f6f8fb;
+  --app-surface-hover: #fafafb;
+  --app-border: #e6e8ec;
+  --app-divider: #eceef2;
+  --app-heading: #111827;
+  --app-text: #374151;
+  --app-text-secondary: #6b7280;
+  --app-placeholder: #9ca3af;
+  --app-radius-xs: 4px;
+  --app-radius-sm: 6px;
+  --app-radius-md: 16px;
+  --app-radius-lg: 12px;
+  --app-radius-xl: 32px;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--app-heading);
+}
+
+h1 {
+  font-size: 3.5rem;
+  letter-spacing: -0.105rem;
+  margin: 2rem 0;
+
+  @media (max-width: 64rem) {
+    font-size: 2.25rem;
+    margin: 1.25rem 0;
+  }
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 118%;
+  letter-spacing: -0.015rem;
+  margin: 0 0 0.5rem;
+
+  @media (max-width: 64rem) {
+    font-size: 1.25rem;
+  }
+}
+
+p {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
