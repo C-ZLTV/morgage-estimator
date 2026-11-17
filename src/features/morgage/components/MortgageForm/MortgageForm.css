@@ -1,0 +1,18 @@
+.form__button {
+  margin-top: 1rem;
+}
+@media screen and (width > 640px) {
+  .from__line-one,
+  .from__line-two {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .from__line-one {
+    grid-template-columns: 40% 60%;
+  }
+
+  .from__line-two {
+    grid-template-columns: 60% 40%;
+  }
+}

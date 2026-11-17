@@ -1,4 +1,12 @@
-.form__container {
-  display: flex;
+.morgage__main {
+  display: grid;
   gap: 1rem;
+}
+
+@media screen and (width > 768px) {
+  .morgage__main {
+    grid-template-columns: 60% 40%;
+    gap: 3rem;
+    align-items: start;
+  }
 }

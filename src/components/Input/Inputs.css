@@ -12,8 +12,12 @@
 
 .input__field {
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--app-radius-sm);
   border: 1px solid #e5e4e7;
   background-color: 16171d;
   box-shadow: none;
+  &:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+  }
 }

@@ -13,16 +13,16 @@
   --app-text: #374151;
   --app-text-secondary: #6b7280;
   --app-placeholder: #9ca3af;
-  --app-radius-xs: 4px;
-  --app-radius-sm: 6px;
-  --app-radius-md: 16px;
-  --app-radius-lg: 12px;
-  --app-radius-xl: 32px;
+  --app-radius-xs: 0.25rem;
+  --app-radius-sm: 0.375rem;
+  --app-radius-md: 1rem;
+  --app-radius-lg: 0.75rem;
+  --app-radius-xl: 2rem;
 }
 
 body {
-  margin: 0;
-  padding: 1rem;
+  max-width: min(90%, 1024px);
+  margin: 0 auto;
   background: var(--app-surface);
   color: var(--app-text);
   font-family: Arial, Helvetica, sans-serif;
@@ -40,7 +40,7 @@ h1 {
   letter-spacing: -0.105rem;
   margin: 2rem 0;
 
-  @media (max-width: 64rem) {
+  @media (max-width: 768px) {
     font-size: 2.25rem;
     margin: 1.25rem 0;
   }
@@ -52,7 +52,7 @@ h2 {
   letter-spacing: -0.015rem;
   margin: 0 0 0.5rem;
 
-  @media (max-width: 64rem) {
+  @media (max-width: 768px) {
     font-size: 1.25rem;
   }
 }

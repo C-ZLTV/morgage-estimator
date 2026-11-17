@@ -1,0 +1,22 @@
+.estamate {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.estimate__title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--app-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.estimate__value {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+@media screen and (width > 640px) {
+  .estamate {
+    padding: 2rem 0;
+  }
+}
