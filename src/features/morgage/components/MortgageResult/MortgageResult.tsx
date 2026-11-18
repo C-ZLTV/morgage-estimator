@@ -1,11 +1,11 @@
 import "./MortgageResult.css";
 
-function MortgageResult() {
+function MortgageResult({ result }: { result: string }) {
   return (
     <>
       <div className="estamate">
         <div className="estimate__title">ESTIMATED MONTHLY INSTALLMENT</div>
-        <div className="estimate__value">€ 1.250,00</div>
+        <div className="estimate__value">{`€ ${result}`}</div>
       </div>
     </>
   );

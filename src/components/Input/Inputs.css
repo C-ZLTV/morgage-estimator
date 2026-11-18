@@ -21,3 +21,11 @@
     outline-offset: 2px;
   }
 }
+
+.input__error {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  background-color: var(--app-danger);
+  color: var(--app-surface-hover);
+  border-radius: var(--app-radius-sm);
+}
