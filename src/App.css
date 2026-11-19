@@ -1,11 +1,11 @@
-.morgage__section-one {
+.mortgage__section-one {
   display: grid;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
 @media screen and (width > 768px) {
-  .morgage__section-one {
+  .mortgage__section-one {
     grid-template-columns: 60% 40%;
     gap: 3rem;
     align-items: start;

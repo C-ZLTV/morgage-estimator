@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./MortgageForm.css";
 
@@ -6,11 +6,15 @@ import Input from "../../../../components/Input/Input";
 import Button from "../../../../components/Button/Button";
 import Toggle from "../../../../components/Toggle/Toggle";
 
-import type { FormData } from "../../types/morgage.types";
+import type { FormData, MortgageSimulation } from "../../types/mortgage.types";
 import { cleanFieldValue, RateTypeEnum } from "../../utils/variables";
-import { calculateMorgage } from "../../utils/functions";
+import { calculateMortgage } from "../../utils/functions";
 
-function MortgageForm({ onSubmit }: { onSubmit: (res: string) => void }) {
+function MortgageForm({
+  liftResult,
+}: {
+  liftResult: (res: MortgageSimulation) => void;
+}) {
   const [formData, setFormData] = useState<FormData>({
     amount: cleanFieldValue,
     rate: cleanFieldValue,
@@ -36,10 +40,11 @@ function MortgageForm({ onSubmit }: { onSubmit: (res: string) => void }) {
       rate: parseFloat(formData.rate.replace(/,/g, ".")),
       years: Number(formData.years),
       installments: Number(formData.installments),
-      rateType: RateTypeEnum.FIXED,
+      rateType: formData.rateType,
     };
-    const result = calculateMorgage(terms);
-    onSubmit(result);
+
+    const result = calculateMortgage(terms);
+    liftResult(result);
   }
 
   function handleSubmitDisabled() {
@@ -50,41 +55,42 @@ function MortgageForm({ onSubmit }: { onSubmit: (res: string) => void }) {
     console.log("formData", formData);
 
     console.log("regex", inputRegex.test(formData.amount));
-  }, [formData]);
- */
+  }, [formData]); */
+
   return (
     <form>
       <div className="from__line-one">
         <Input
           id="amount"
           label={"Amount"}
-          name="Amount"
+          name="amount"
           value={formData.amount}
           error={hadleInputError(formData.amount)}
           onChange={(value) => setFormData({ ...formData, amount: value })}
         />
         <Input
           id="rate"
-          label={"Rate"}
-          name="Rate"
+          label={"Rate percentage"}
+          name="rate"
           value={formData.rate}
           error={hadleInputError(formData.rate)}
+          //TODO add percentage
           onChange={(value) => setFormData({ ...formData, rate: value })}
         />
       </div>
-      <div className=" from__line-two">
+      <div className="from__line-two">
         <Input
           id="years"
           label={"Years"}
-          name="Years"
+          name="years"
           value={formData.years}
           error={hadleInputError(formData.years)}
           onChange={(value) => setFormData({ ...formData, years: value })}
         />
         <Input
           id="installments"
-          label={"Installments"}
-          name="Installments"
+          label={"Yearly installments"}
+          name="installments"
           value={formData.installments}
           error={hadleInputError(formData.installments)}
           onChange={(value) =>
