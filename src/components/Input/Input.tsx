@@ -14,6 +14,7 @@ interface InputProps {
 
 function Input({
   label,
+  id,
   name,
   value,
   onChange,
@@ -26,12 +27,12 @@ function Input({
 
   return (
     <div className="input__container">
-      <label className="input__label" htmlFor={name}>
+      <label className="input__label" htmlFor={id}>
         {label}
       </label>
       <input
         className="input__field"
-        id={name}
+        id={id}
         name={name}
         type={type}
         value={value}

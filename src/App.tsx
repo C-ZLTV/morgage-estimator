@@ -5,9 +5,12 @@ import MortgageHistory from "./features/mortgage/components/MortgageHistory/Mort
 import MortgageForm from "./features/mortgage/components/MortgageForm/MortgageForm";
 import MortgageResult from "./features/mortgage/components/MortgageResult/MortgageResult";
 import type { MortgageSimulation } from "./features/mortgage/types/mortgage.types";
+import { getHistory } from "./features/mortgage/utils/functions";
 
 function App() {
   const [result, setResult] = useState<MortgageSimulation>();
+  const history = getHistory();
+
   return (
     <>
       <header>
@@ -19,7 +22,7 @@ function App() {
           {result && <MortgageResult result={result} />}
         </section>
         <section>
-          <MortgageHistory />
+          <MortgageHistory entries={history?.installmentsHistory} />
         </section>
       </main>
     </>

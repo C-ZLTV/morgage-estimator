@@ -2,6 +2,7 @@ import "./Button.css";
 
 interface ButtonProps {
   variant?: "primary" | "secondary";
+  type?: "button" | "submit";
   children: React.ReactNode;
   disabled?: boolean;
   onClick?: () => void;
@@ -9,14 +10,14 @@ interface ButtonProps {
 
 function Button({
   variant = "primary",
-
+  type = "button",
   children,
   disabled = false,
   onClick,
 }: ButtonProps) {
   return (
     <button
-      type="button"
+      type={type}
       className={`button button--${variant}`}
       disabled={disabled}
       onClick={onClick}

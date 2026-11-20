@@ -18,14 +18,30 @@ interface MortgageTerms {
   rateType: RateType;
 }
 
-interface MortgageSimulation {
-  terms: MortgageTerms;
-  installments: {
-    id: string;
-    installment: number;
-    interest: number;
-    rate: number;
-  }[];
+interface Installment {
+  id: string;
+  installment: number;
+  interest: number;
+  rate: number;
 }
 
-export type { FormData, MortgageTerms, MortgageSimulation };
+interface MortgageSimulation {
+  terms: MortgageTerms;
+  installments: Installment[];
+}
+
+interface MortgageHistoryEntry extends MortgageTerms, Installment {
+  createdAt: string;
+}
+
+interface MortgageHistory {
+  installmentsHistory: MortgageHistoryEntry[];
+}
+
+export type {
+  FormData,
+  MortgageTerms,
+  MortgageSimulation,
+  MortgageHistoryEntry,
+  MortgageHistory,
+};

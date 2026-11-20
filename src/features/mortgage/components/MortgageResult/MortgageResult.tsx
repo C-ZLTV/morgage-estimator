@@ -1,5 +1,6 @@
+import KeyValuePair from "../../../../components/KeyValuePair/KeyValuePair";
 import type { MortgageSimulation } from "../../types/mortgage.types";
-import { formatInstallment } from "../../utils/functions";
+import { formatNumber, formatCurrency } from "../../utils/functions";
 import { RateTypeEnum } from "../../utils/variables";
 import "./MortgageResult.css";
 
@@ -9,9 +10,9 @@ function MortgageResult({ result }: { result: MortgageSimulation }) {
   return (
     <section className="result" aria-label="Mortgage calculation result">
       <section className="result__main">
-        <h2 className="result__title">ESTIMATED MONTHLY INSTALLMENT</h2>
+        <h2 className="result__title">Estimated installment</h2>
         <p className="result__value">
-          {formatInstallment(installments[0].installment)}
+          {formatCurrency(installments[0].installment)}
         </p>
       </section>
 
@@ -25,16 +26,15 @@ function MortgageResult({ result }: { result: MortgageSimulation }) {
                 <div className="result__installment-title">
                   {`${index + 1}° Installment`}
                 </div>
-
                 <div className="result__details">
-                  <div className="result__detail">
-                    <span className="result__detail-key">Rate: </span>
-                    <span>{`${installment.rate}%`}</span>
-                  </div>
-                  <div className="result__detail">
-                    <span className="result__detail-key">Payment: </span>
-                    <span>{formatInstallment(installment.installment)}</span>
-                  </div>
+                  <KeyValuePair
+                    label={"Rate: "}
+                    value={`${formatNumber(installment.rate)}%`}
+                  ></KeyValuePair>
+                  <KeyValuePair
+                    label={"Payment: "}
+                    value={formatCurrency(installment.installment)}
+                  ></KeyValuePair>
                 </div>
               </li>
             ))}

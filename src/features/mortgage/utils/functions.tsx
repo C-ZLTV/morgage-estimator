@@ -1,4 +1,6 @@
 import type {
+  MortgageHistory,
+  MortgageHistoryEntry,
   MortgageSimulation,
   MortgageTerms,
 } from "../types/mortgage.types";
@@ -13,7 +15,7 @@ function calculateMortgage(terms: MortgageTerms): MortgageSimulation {
 
   const simulatedInstallments = Array.from({
     length: years * installments,
-  }).map((_, index) => {
+  }).map(() => {
     const C = amount - repayedAmount;
     const n = years * installments - payedInstallments;
     const r = tan / installments;
@@ -21,25 +23,20 @@ function calculateMortgage(terms: MortgageTerms): MortgageSimulation {
     const installment = calculateInstallment(C, r, n);
     const interest = calculateInstallmentInterest(C, tan, installments);
 
+    const installmentEntry = {
+      id: crypto.randomUUID(),
+      installment: Number(installment.toFixed(2)),
+      interest: Number(interest.toFixed(2)),
+      rate: Number((tan * 100).toFixed(2)),
+    };
+
     if (rateType === RateTypeEnum.VARIABLE) {
       tan = getRate(1.8, 4) / 100.0;
     }
     repayedAmount = repayedAmount + (installment - interest);
     payedInstallments++;
 
-    console.log(repayedAmount, payedInstallments, {
-      id: crypto.randomUUID(),
-      installment: Number(installment.toFixed(2)),
-      interest: Number(interest.toFixed(2)),
-      rate: tan * 100.0,
-    });
-
-    return {
-      id: crypto.randomUUID(),
-      installment: Number(installment.toFixed(2)),
-      interest: Number(interest.toFixed(2)),
-      rate: Number((tan * 100).toFixed(2)),
-    };
+    return installmentEntry;
   });
 
   return { terms, installments: simulatedInstallments };
@@ -77,11 +74,63 @@ function calculateMortgage(terms: MortgageTerms): MortgageSimulation {
    */
 }
 
+function updateHistory(historyEntry: MortgageHistoryEntry) {
+  try {
+    const history = getHistory();
+
+    const entries = history.installmentsHistory ?? [];
+
+    const updatedHistory = [historyEntry, ...entries];
+
+    localStorage.setItem(
+      "history",
+      JSON.stringify({ installmentsHistory: updatedHistory }),
+    );
+
+    return true;
+  } catch (error) {
+    console.error("Unable to update History:", error);
+    return false;
+  }
+}
+
+function getHistory(): MortgageHistory {
+  const historyBase: MortgageHistory = { installmentsHistory: [] };
+
+  try {
+    const historyJson = localStorage.getItem("history");
+
+    if (!historyJson) {
+      return historyBase;
+    }
+    const parsedHistory = JSON.parse(historyJson);
+
+    if (
+      typeof parsedHistory === "object" &&
+      parsedHistory !== null &&
+      "installmentsHistory" in parsedHistory &&
+      Array.isArray(parsedHistory.installmentsHistory)
+    ) {
+      return parsedHistory as MortgageHistory;
+    } else {
+      return historyBase;
+    }
+
+    return parsedHistory;
+  } catch (error) {
+    console.log(error);
+    return historyBase;
+  }
+}
+
 function getRate(min: number, max: number) {
   return Number((Math.random() * (max - min) + min).toFixed(2));
 }
 
 function calculateInstallment(C: number, r: number, n: number) {
+  if (r === 0) {
+    return C / n;
+  }
   return C * ((r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
 }
 
@@ -93,13 +142,24 @@ function calculateInstallmentInterest(
   return (C * tan) / installments;
 }
 
-function formatInstallment(number: number) {
-  const formatted = new Intl.NumberFormat("de-DE", {
+function formatCurrency(number: number) {
+  return new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
   }).format(number);
-
-  return formatted;
 }
 
-export { calculateMortgage, formatInstallment };
+function formatNumber(number: number) {
+  return new Intl.NumberFormat("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+}
+
+export {
+  calculateMortgage,
+  formatCurrency,
+  formatNumber,
+  updateHistory,
+  getHistory,
+};
